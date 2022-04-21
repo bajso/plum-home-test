@@ -49,3 +49,33 @@ class TestApi:
 
         assert response.status_code == 200
         assert [acc['id'] in ['1', '2'] for acc in response.json]
+        assert [acc['balance'] in ['250.0', '100.0'] for acc in response.json]
+
+    def test_transfer(self, client):
+        request_payload = {
+            'from_id': '1',
+            'to_id': '2',
+            'amount': '100'
+        }
+        response = client.post("/accounts/transfer", json=request_payload)
+
+        assert response.status_code == 200
+
+    def test_transfer_invalid_payload(self, client):
+        request_payload = {
+            'from_id': '1',
+            'amount': '100'
+        }
+        response = client.post("/accounts/transfer", json=request_payload)
+
+        assert response.status_code == 400
+
+    def test_transfer_invalid_amount(self, client):
+        request_payload = {
+            'from_id': '1',
+            'to_id': '2',
+            'amount': '-999'
+        }
+        response = client.post("/accounts/transfer", json=request_payload)
+
+        assert response.status_code == 400
