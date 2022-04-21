@@ -1,5 +1,6 @@
 from flask import Flask
-from plum_bank.api import api
+
+from plum_bank.controller.api import api
 
 
 def create_app(settings_overrides=None):

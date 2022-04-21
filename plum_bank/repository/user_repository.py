@@ -20,6 +20,16 @@ PREPOPULATED_USERS = """[
     },
     {
         "id": "572ac805-aea8-4039-aaac-ee028e97b827",
+        "accounts": [
+            {
+                "id": "1",
+                "balance": "250"
+            },
+                        {
+                "id": "2",
+                "balance": "100"
+            }
+        ],
         "name": "Georgina Hazel"
     }
 ]"""
@@ -34,11 +44,13 @@ class UserRepository:
         for item in tmp_users:
             user = User(item['name'])
             user.id = item['id']
+            if item.get('accounts') is not None:
+                user.accounts = item['accounts']
             self.users.append(user)
 
     def find_by_id(self, user_id: uuid) -> User:
         matches = [u for u in self.users if u.id == user_id]
         if not matches:
-            raise UserNotFoundException(f"User with id {user_id} not found")
+            raise UserNotFoundException(f"User with id:{user_id} not found")
         assert len(matches) == 1
         return matches[0]

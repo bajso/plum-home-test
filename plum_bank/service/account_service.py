@@ -1,5 +1,6 @@
 
 import uuid
+from typing import List
 
 from plum_bank.model.account import Account
 from plum_bank.model.user import User
@@ -19,3 +20,6 @@ class AccountService:
         user = self.repository.find_by_id(user_id)
         account = Account(deposit)
         user.accounts.append(account)
+
+    def get_balances(self, user_id: uuid) -> List[Account]:
+        return self.get_user(user_id).accounts

@@ -5,12 +5,12 @@ from plum_bank.service.account_service import AccountService
 
 
 class TestAccountService:
-    def get_user(self):
+    def test_get_user(self):
         user_id = '572ac805-aea8-4039-aaac-ee028e97b827'
         service = AccountService()
         assert isinstance(service.get_user(user_id), User)
 
-    def get_user_not_found(self):
+    def test_get_user_not_found(self):
         user_id = '1'
         service = AccountService()
         with(pytest.raises(UserNotFoundException)):
@@ -18,7 +18,7 @@ class TestAccountService:
 
     def test_create_account(self):
         service = AccountService()
-        user_id = '572ac805-aea8-4039-aaac-ee028e97b827'
+        user_id = '701c832c-5bd8-4322-9041-ddd3511bbc23'
 
         assert len(service.get_user(user_id).accounts) == 0
 
