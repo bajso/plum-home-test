@@ -1,6 +1,8 @@
 import json
+import uuid
 from typing import List
 
+from plum_bank.exceptions.user_not_found_exception import UserNotFoundException
 from plum_bank.model.user import User
 
 PREPOPULATED_USERS = """[
@@ -33,3 +35,10 @@ class UserRepository:
             user = User(item['name'])
             user.id = item['id']
             self.users.append(user)
+
+    def find_by_id(self, user_id: uuid) -> User:
+        matches = [u for u in self.users if u.id == user_id]
+        if not matches:
+            raise UserNotFoundException(f"User with id {user_id} not found")
+        assert len(matches) == 1
+        return matches[0]
