@@ -2,7 +2,9 @@ import json
 import uuid
 from typing import List
 
+from plum_bank.exceptions.account_not_found import AccountNotFoundException
 from plum_bank.exceptions.user_not_found_exception import UserNotFoundException
+from plum_bank.model.account import Account
 from plum_bank.model.user import User
 
 PREPOPULATED_USERS = """[
@@ -44,8 +46,13 @@ class UserRepository:
         for item in tmp_users:
             user = User(item['name'])
             user.id = item['id']
-            if item.get('accounts') is not None:
-                user.accounts = item['accounts']
+            if (accounts := item.get('accounts')) is not None:
+                account_list = []
+                for a in accounts:
+                    account = Account(float(a['balance']))
+                    account.id = a['id']
+                    account_list.append(account)
+                user.accounts = account_list
             self.users.append(user)
 
     def find_by_id(self, user_id: uuid) -> User:
@@ -54,3 +61,10 @@ class UserRepository:
             raise UserNotFoundException(f"User with id:{user_id} not found")
         assert len(matches) == 1
         return matches[0]
+
+    def find_account_by_id(self, acc_id: uuid) -> Account:
+        for user in self.users:
+            for acc in user.accounts:
+                if (acc_id == acc.id):
+                    return acc
+        raise AccountNotFoundException(f"Account with id:{acc_id} not found")

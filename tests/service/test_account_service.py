@@ -25,3 +25,4 @@ class TestAccountService:
         service.create_account(user_id, 100.0)
         assert len(service.get_user(user_id).accounts) == 1
         assert service.get_user(user_id).accounts[0].balance == 100.0
+        assert service.get_user(user_id).accounts[0].id is not None
