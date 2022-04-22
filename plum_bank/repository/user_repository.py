@@ -2,8 +2,8 @@ import json
 import uuid
 from typing import List
 
-from plum_bank.exceptions.account_not_found import AccountNotFoundException
-from plum_bank.exceptions.user_not_found_exception import UserNotFoundException
+from plum_bank.model.exceptions.account_not_found import AccountNotFoundException
+from plum_bank.model.exceptions.user_not_found_exception import UserNotFoundException
 from plum_bank.model.account import Account
 from plum_bank.model.user import User
 

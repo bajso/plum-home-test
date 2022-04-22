@@ -1,8 +1,8 @@
 import logging
 
 from flask import Blueprint, jsonify, request
-from plum_bank.exceptions.account_not_found import AccountNotFoundException
-from plum_bank.exceptions.user_not_found_exception import UserNotFoundException
+from plum_bank.model.exceptions.account_not_found import AccountNotFoundException
+from plum_bank.model.exceptions.user_not_found_exception import UserNotFoundException
 from plum_bank.service.account_service import AccountService
 
 api = Blueprint('api', __name__)
